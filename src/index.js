@@ -9,6 +9,17 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 // console.log(process.env)
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
+Sentry.init({
+  dsn: "https://9d33d9d8ec604257acc16be7ba564ea8@o1322077.ingest.sentry.io/6579382",
+  integrations: [new BrowserTracing()],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 const httpLink = new HttpLink({
   uri: 'https://wondrous-krill-11.hasura.app/v1/graphql',
   headers: {

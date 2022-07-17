@@ -4,8 +4,6 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 // import { Navigate,  } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +16,7 @@ import { useMutation } from '@apollo/client';
 import Container from '@material-ui/core/Container';
 import { INSERT_DRIVER } from '../queries/INSERT_DRIVER';
 import { INSERT_RIDER } from '../queries/INSERT_RIDERS';
-
+import * as Sentry from '@sentry/react';
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -79,7 +77,8 @@ export default function SignUp() {
         },
         onError: (err) => {
             // console.log(err);
-            alert("name already exist");
+            Sentry.captureException(err);
+            alert(err);
         },
     });
     const [addriderdetails] = useMutation(INSERT_RIDER, {
@@ -88,8 +87,8 @@ export default function SignUp() {
             { data && navigate('/login'); }
         },
         onError: (err) => {
-            // console.log(err);
-            alert("name already exist");
+            Sentry.captureException(err);
+            alert(err);
         },
     });
 
@@ -186,12 +185,6 @@ export default function SignUp() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid> */}
                     </Grid>
                     <Button
                         type="submit"

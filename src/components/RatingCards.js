@@ -43,9 +43,12 @@ const labels = {
 };
 export const RatingCards = (props) => {
     const {  rides } = props
-    // console.log( rides)
     const classes = useStyles();
-    return (rides.map((ride, index) =>
+    if(rides.length===0) return  <h1>{'Start a new ride by clicking on Start ride'}</h1>;
+    // console.log( rides)
+   
+    return (
+        rides.map((ride, index) =>
         <Card key={index} className={classes.root}>
             <div className={classes.details}>
                 <CardContent className={classes.content}>

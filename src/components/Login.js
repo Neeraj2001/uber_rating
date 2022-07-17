@@ -13,11 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_DRIVER_AUTH } from '../queries/GET_DRIVER_AUTH';
 import { GET_RIDER_AUTH } from '../queries/GET_RIDER_AUTH';
 import { useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
@@ -60,6 +60,8 @@ export default function SignIn() {
     const navigate = useNavigate();
     const { loading, error, data } = useQuery(type === 'driver' ? GET_DRIVER_AUTH : GET_RIDER_AUTH);
     // console.log(data)
+    if(error)  Sentry.captureException(error);
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (type === 'driver') {

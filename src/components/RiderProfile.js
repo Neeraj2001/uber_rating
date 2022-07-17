@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_RIDER_DETAILS } from '../queries/GET_RIDER_DETAILS';
@@ -12,6 +12,7 @@ import { UPDATE_RIDER_RIDES } from '../queries/UPDATE_RIDER_RIDES';
 import StarsRoundedIcon from '@material-ui/icons/StarsRounded';
 import { UPDATE_DRIVER_RATINGS } from '../queries/UPDATE_DRIVER_RATINGS';
 import { useNavigate } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 const useStyles = makeStyles(() => ({
     button: {
         backgroundColor: 'blue',
@@ -33,11 +34,12 @@ const useStyles = makeStyles(() => ({
 }));
 export const RiderProfile = () => {
     const classes = useStyles();
-    const { loading, error, data: rdata } = useQuery(GET_RIDER_DETAILS);
-    const { data: ddata } = useQuery(GET_DRIVER_DETAILS);
+    const { loading, error: rerror, data: rdata } = useQuery(GET_RIDER_DETAILS);
+    const {error:derror, data: ddata } = useQuery(GET_DRIVER_DETAILS);
+    if(rerror) Sentry.captureException(rerror);
+    if(derror) Sentry.captureException(derror);
     const [updateRiderRides] = useMutation(UPDATE_RIDER_RIDES);
     const [updateDriverRating] = useMutation(UPDATE_DRIVER_RATINGS);
-    // console.log(rdata?.rider)
     const [open, setOpen] = React.useState(false);
     const { riderid } = useParams();
     const [selectedValue, setSelectedValue] = React.useState(1);
@@ -52,24 +54,19 @@ export const RiderProfile = () => {
             data: { rider: [updatedData, ...currentValue.rider] },
         });
     };
-    // console.log(riderid)
-    // console.log(ddata?.driver)
     const riderdata = rdata?.rider.find((e) => e.riderid === riderid);
-    // console.log(riderdata);
     let rides = riderdata?.riderrides ? JSON.parse(riderdata?.riderrides) : [];
     const pickRide = (() => {
         const driverCount = ddata?.driver?.length;
         return ddata?.driver?.[Math.floor(Math.random() * (driverCount))];
 
     })();
-    const dialogRef = useRef();
     const handleClickOpen = () => {
-        dialogRef.current.openDialog();
+        setOpen(true);
     };
 
     const handleClose = (value) => {
-        dialogRef.current.closeDialog();
-        // console.log(pickRide, pickRide?.driverid, value)
+        setOpen(false)
         const index = rides.findIndex(object => {
             return object.id === pickRide?.driverid;
         });
@@ -100,8 +97,6 @@ export const RiderProfile = () => {
         })
         setSelectedValue(0);
     };
-    // console.log(selectedValue)
-    // console.log(pickRide)
     return <div>
         <Box sx={{ width: '100%' }}>
             <Grid container spacing={2}>
@@ -124,6 +119,7 @@ export const RiderProfile = () => {
                 </Grid>
             </Grid>
         </Box>
-        <RatingDialog ref={dialogRef} selectedValue={selectedValue} pickRide={pickRide} type='rider' onClose={handleClose} />
+        <RatingDialog open={open} selectedValue={selectedValue} pickRide={pickRide} type='rider' onClose={handleClose} />
+        {/* {Dialog} */}
     </div>
 }

@@ -37,7 +37,7 @@ export const RiderProfile = () => {
     const { data: ddata } = useQuery(GET_DRIVER_DETAILS);
     const [updateRiderRides] = useMutation(UPDATE_RIDER_RIDES);
     const [updateDriverRating] = useMutation(UPDATE_DRIVER_RATINGS);
-    console.log(rdata?.rider)
+    // console.log(rdata?.rider)
     const [open, setOpen] = React.useState(false);
     const { riderid } = useParams();
     const [selectedValue, setSelectedValue] = React.useState(1);
@@ -52,10 +52,10 @@ export const RiderProfile = () => {
             data: { rider: [updatedData, ...currentValue.rider] },
         });
     };
-    console.log(riderid)
-    console.log(ddata?.driver)
+    // console.log(riderid)
+    // console.log(ddata?.driver)
     const riderdata = rdata?.rider.find((e) => e.riderid === riderid);
-    console.log(riderdata);
+    // console.log(riderdata);
     let rides = riderdata?.riderrides ? JSON.parse(riderdata?.riderrides) : [];
     const pickRide = (() => {
         const driverCount = ddata?.driver?.length;
@@ -69,7 +69,7 @@ export const RiderProfile = () => {
 
     const handleClose = (value) => {
         dialogRef.current.closeDialog();
-        console.log(pickRide, pickRide?.driverid, value)
+        // console.log(pickRide, pickRide?.driverid, value)
         const index = rides.findIndex(object => {
             return object.id === pickRide?.driverid;
         });
@@ -100,7 +100,7 @@ export const RiderProfile = () => {
         })
         setSelectedValue(0);
     };
-    console.log(selectedValue)
+    // console.log(selectedValue)
     // console.log(pickRide)
     return <div>
         <Box sx={{ width: '100%' }}>

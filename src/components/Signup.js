@@ -60,7 +60,7 @@ export default function SignUp() {
     const [name, setName] = useState('');
     const [contact, setContact] = useState('');
     const navigate = useNavigate();
-    console.log(type)
+    // console.log(type)
     function handleSubmit(event) {
         event.preventDefault();
         if (type === 'driver') {
@@ -74,21 +74,21 @@ export default function SignUp() {
 
     const [adddriverdetails] = useMutation(INSERT_DRIVER, {
         onCompleted: (data) => {
-            console.log(data);
+            // console.log(data);
             { data && navigate('/login'); }
         },
         onError: (err) => {
-            console.log(err);
+            // console.log(err);
             alert("name already exist");
         },
     });
     const [addriderdetails] = useMutation(INSERT_RIDER, {
         onCompleted: (data) => {
-            console.log(data);
+            // console.log(data);
             { data && navigate('/login'); }
         },
         onError: (err) => {
-            console.log(err);
+            // console.log(err);
             alert("name already exist");
         },
     });

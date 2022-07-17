@@ -12,7 +12,9 @@ import {
 const httpLink = new HttpLink({
   uri: 'https://wondrous-krill-11.hasura.app/v1/graphql',
   headers: {
-    'x-hasura-access-key': process.env.REACT_APP_DB_CONNECTION,
+    // 'x-hasura-access-key': process.env.REACT_APP_DB_CONNECTION,
+    'x-hasura-access-key': 'VzdA69N77Vi2SW6v8Ws7d7MDqzpH6kejBK1nZe5xsC0xy3ltAf2lqeXZ70aZnAHq',
+
   }
 });
 

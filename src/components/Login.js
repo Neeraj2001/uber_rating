@@ -59,22 +59,22 @@ export default function SignIn() {
     const [valid, setValid] = useState(false);
     const navigate = useNavigate();
     const { loading, error, data } = useQuery(type === 'driver' ? GET_DRIVER_AUTH : GET_RIDER_AUTH);
-    console.log(data)
+    // console.log(data)
     const handleSubmit = (event) => {
         event.preventDefault();
         if (type === 'driver') {
             let userdata = data?.driver?.find((e) => e.drivername === name);
-            console.log(userdata);
+            // console.log(userdata);
             if (userdata?.password === password) navigate(`/driver/${userdata.driverid}`)
             else alert("invalid username or password");
         }
         else {
             let userdata = data?.rider?.find((e) => e.ridername === name);
-            console.log(userdata);
+            // console.log(userdata);
             if (userdata?.password === password) navigate(`/rider/${userdata.riderid}`)
             else alert("invalid username or password");
         }
-        console.log(valid, data);
+        // console.log(valid, data);
     }
 
     return (

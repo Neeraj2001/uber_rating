@@ -42,7 +42,7 @@ const labels = {
     const [hover, setHover] = React.useState(-1);
     // const { riderid } = useParams();
 
-    console.log(rating, pickRide,type);
+    // console.log(rating, pickRide,type);
     const innerRef = useRef();
   
     useImperativeHandle(ref, () => ({
@@ -67,7 +67,7 @@ const labels = {
                     precision={1}
                     defaultValue={5}
                     onChange={(event, newValue) => {
-                        console.log(event.target.value, newValue)
+                        // console.log(event.target.value, newValue)
                         setRating(Math.floor(newValue));
                     }}
                     onChangeActive={(event, newHover) => {

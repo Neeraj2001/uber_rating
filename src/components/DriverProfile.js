@@ -38,7 +38,7 @@ export const DriverProfile = () => {
     const { loading, error, data: ddata } = useQuery(GET_DRIVER_DETAILS);
     const [updateRiderRatings] = useMutation(UPDATE_RIDER_RATINGS);
     const [updateDriverRides] = useMutation(UPDATE_DRIVER_RIDES);
-    console.log(rdata?.rider)
+    // console.log(rdata?.rider)
     const [open, setOpen] = React.useState(false);
     const { driverid } = useParams();
     const [selectedValue, setSelectedValue] = React.useState(1);
@@ -53,10 +53,10 @@ export const DriverProfile = () => {
             data: { driver: [updatedData, ...currentValue.driver] },
         });
     };
-    console.log(driverid)
-    console.log(ddata?.driver)
+    // console.log(driverid)
+    // console.log(ddata?.driver)
     const driverdata = ddata?.driver.find((e) => e.driverid === driverid);
-    console.log(driverdata);
+    // console.log(driverdata);
     let rides = driverdata?.driverrides ? JSON.parse(driverdata?.driverrides) : [];
     const pickRide = (() => {
         const riderCount = rdata?.rider?.length;
@@ -70,7 +70,7 @@ export const DriverProfile = () => {
 
     const handleClose = (value) => {
         dialogRef.current.closeDialog();
-        console.log(pickRide, pickRide?.driverid, value)
+        // console.log(pickRide, pickRide?.driverid, value)
         const index = rides.findIndex(object => {
             return object.id === pickRide?.riderid;
         });
@@ -101,7 +101,7 @@ export const DriverProfile = () => {
         })
         setSelectedValue(0);
     };
-    console.log(selectedValue)
+    // console.log(selectedValue)
     return <div>
         <Box sx={{ width: '100%' }}>
             <Grid container spacing={2}>

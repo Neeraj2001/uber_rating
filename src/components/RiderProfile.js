@@ -61,14 +61,6 @@ export const RiderProfile = () => {
         return ddata?.driver?.[Math.floor(Math.random() * (driverCount))];
 
     })();
-    // function ride(){
-    //     const driverCount = ddata?.driver?.length;
-    //         return ddata?.driver?.[Math.floor(Math.random() * (driverCount))];
-    // } 
-    // let pickRide = ride();
-    // useEffect(()=>{
-    //  pickRide = ride();
-    // },[open])
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -128,6 +120,5 @@ export const RiderProfile = () => {
             </Grid>
         </Box>
         <RatingDialog open={open} selectedValue={selectedValue} pickRide={pickRide} type='rider' onClose={handleClose} />
-        {/* {Dialog} */}
     </div>
 }

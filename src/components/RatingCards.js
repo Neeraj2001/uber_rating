@@ -52,7 +52,7 @@ export const RatingCards = (props) => {
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h5" variant="h5">
-                        {ride.name ?? 'driver'}
+                        {ride?.name}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary">
                         Rides: {ride?.rides}

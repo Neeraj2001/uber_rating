@@ -35,9 +35,9 @@ const useStyles = makeStyles(() => ({
 export const RiderProfile = () => {
     const classes = useStyles();
     const { loading, error: rerror, data: rdata } = useQuery(GET_RIDER_DETAILS);
-    const {error:derror, data: ddata } = useQuery(GET_DRIVER_DETAILS);
-    if(rerror) Sentry.captureException(rerror);
-    if(derror) Sentry.captureException(derror);
+    const { error: derror, data: ddata } = useQuery(GET_DRIVER_DETAILS);
+    if (rerror) Sentry.captureException(rerror);
+    if (derror) Sentry.captureException(derror);
     const [updateRiderRides] = useMutation(UPDATE_RIDER_RIDES);
     const [updateDriverRating] = useMutation(UPDATE_DRIVER_RATINGS);
     const [open, setOpen] = React.useState(false);
@@ -52,6 +52,16 @@ export const RiderProfile = () => {
         cache.writeQuery({
             query: GET_RIDER_DETAILS,
             data: { rider: [updatedData, ...currentValue.rider] },
+        });
+    };
+    const updateDriverCache = (cache, { data }) => {
+        const currentValue = cache.readQuery({
+            query: GET_DRIVER_DETAILS,
+        });
+        const updatedData = data;
+        cache.writeQuery({
+            query: GET_DRIVER_DETAILS,
+            data: { driver: [updatedData, ...currentValue.driver] },
         });
     };
     const riderdata = rdata?.rider.find((e) => e.riderid === riderid);
@@ -71,20 +81,23 @@ export const RiderProfile = () => {
             return object.id === pickRide?.driverid;
         });
         const finaljson = (() => {
-            if (index < 0) { rides.push({ id: pickRide?.driverid, name: pickRide?.drivername, rating: value, rides: 1 }); return rides }
+            if (index < 0) { rides.push({ id: pickRide?.driverid, name: pickRide?.drivername, rating: value , rides: 1, entry: 1 }); return rides }
             else return rides.map((obj, ind) => {
                 if (ind === index) {
-                    return { ...obj, rating: Math.floor((obj.rating + value) / 2), rides: obj.rides + 1 };
+                    return { ...obj, rating: obj.rating + value, rides: obj.rides + 1, entry: obj.entry + 1 };
                 }
                 return obj
             })
         })();
+        // console.log(pickRide)
         updateDriverRating({
             variables: {
                 driverid: pickRide?.driverid,
                 drivertrips: pickRide?.drivertrips + 1,
-                driverrating: Math.floor((pickRide?.driverrating + value) / 2),
+                driverentry: pickRide?.driverentry + 1,
+                driverrating: pickRide?.driverrating + value,
             },
+            update: updateDriverCache
         })
 
         updateRiderRides({
@@ -105,7 +118,7 @@ export const RiderProfile = () => {
                         <h1>Rider profile</h1>
                         <h3>Name: {riderdata?.ridername}</h3>
                         <div className={classes.flex}>
-                            <div><h3>Rating: {riderdata?.riderrating} </h3>
+                            <div><h3>Rating: {riderdata?.riderentry ? Math.floor(riderdata?.riderrating / riderdata?.riderentry) : riderdata?.riderrating} </h3>
                             </div><div className={classes.star}><StarsRoundedIcon />
                             </div></div>
                         <h3>Rides: {riderdata?.ridertrips}</h3>

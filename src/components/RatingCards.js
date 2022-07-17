@@ -57,8 +57,8 @@ export const RatingCards = (props) => {
                     <Typography variant="subtitle1" color="textSecondary">
                         Rides: {ride?.rides}
                     </Typography>
-                    <Rating name="half-rating-read" value={ride?.rating} defaultValue={ride?.rating ?? 3} precision={1} readOnly />
-                    {ride?.rating !== null ? <Box ml={2}>{labels[Math.floor(ride?.rating)]}</Box> : <Box ml={2}>{labels[3]}</Box>}
+                    <Rating name="half-rating-read" value={Math.floor(ride?.rating/ride?.entry)} defaultValue={3} precision={1} readOnly />
+                    {ride?.rating !== null ? <Box ml={2}>{labels[Math.floor(ride?.rating/ride?.entry)]}</Box> : <Box ml={2}>{labels[3]}</Box>}
 
                 </CardContent>
             </div>

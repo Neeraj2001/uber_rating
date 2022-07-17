@@ -8,6 +8,7 @@ query get_driver_details {
       drivermobileno
       driverrating
       drivertrips
+      driverentry
       drivervehical
       driverrides
     }

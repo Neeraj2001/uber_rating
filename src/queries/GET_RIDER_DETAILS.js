@@ -7,6 +7,7 @@ query get_rider_details {
       riderid
       ridermobileno
       riderrating
+      riderentry
       ridertrips
       riderrides
     }

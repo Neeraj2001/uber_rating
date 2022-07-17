@@ -44,7 +44,6 @@ const labels = {
 export const RatingCards = (props) => {
     const {  rides } = props
     const classes = useStyles();
-    if(rides.length===0) return  <h1>{'Start a new ride by clicking on Start ride'}</h1>;
     // console.log( rides)
    
     return (

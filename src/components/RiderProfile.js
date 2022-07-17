@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_RIDER_DETAILS } from '../queries/GET_RIDER_DETAILS';

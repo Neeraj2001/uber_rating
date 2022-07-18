@@ -42,7 +42,7 @@ export const RiderProfile = () => {
     const [updateDriverRating] = useMutation(UPDATE_DRIVER_RATINGS);
     const [open, setOpen] = React.useState(false);
     const { riderid } = useParams();
-    const [selectedValue, setSelectedValue] = React.useState(1);
+    // const [selectedValue, setSelectedValue] = React.useState(1);
     const navigate = useNavigate();
     const updateCache = (cache, { data }) => {
         const currentValue = cache.readQuery({
@@ -81,7 +81,7 @@ export const RiderProfile = () => {
             return object.id === pickRide?.driverid;
         });
         const finaljson = (() => {
-            if (index < 0) { rides.push({ id: pickRide?.driverid, name: pickRide?.drivername, rating: value , rides: 1, entry: 1 }); return rides }
+            if (index < 0) { rides.push({ id: pickRide?.driverid, name: pickRide?.drivername, rating: value, rides: 1, entry: 1 }); return rides }
             else return rides.map((obj, ind) => {
                 if (ind === index) {
                     return { ...obj, rating: obj.rating + value, rides: obj.rides + 1, entry: obj.entry + 1 };
@@ -103,12 +103,12 @@ export const RiderProfile = () => {
         updateRiderRides({
             variables: {
                 riderid: riderid,
-                ridertrips: riderdata?.ridertrips + 1 ?? 0,
+                ridertrips: riderdata?.ridertrips + 1,
                 riderrides: JSON.stringify(finaljson),
             },
             update: updateCache
         })
-        setSelectedValue(0);
+        // setSelectedValue(1);
     };
     return <div>
         <Box sx={{ width: '100%' }}>
@@ -132,6 +132,6 @@ export const RiderProfile = () => {
                 </Grid>
             </Grid>
         </Box>
-        <RatingDialog open={open} selectedValue={selectedValue} pickRide={pickRide} type='rider' onClose={handleClose} />
+      { open && <RatingDialog open={open}  pickRide={pickRide} type='rider' onClose={handleClose} />}
     </div>
 }

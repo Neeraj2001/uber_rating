@@ -42,7 +42,7 @@ export const DriverProfile = () => {
     const [updateDriverRides] = useMutation(UPDATE_DRIVER_RIDES);
     const [open, setOpen] = React.useState(false);
     const { driverid } = useParams();
-    const [selectedValue, setSelectedValue] = React.useState(1);
+    // const [selectedValue, setSelectedValue] = React.useState(1);
     const navigate = useNavigate();
     const updateCache = (cache, { data }) => {
         const currentValue = cache.readQuery({
@@ -103,12 +103,12 @@ export const DriverProfile = () => {
         updateDriverRides({
             variables: {
                 driverid: driverid,
-                drivertrips: driverdata?.drivertrips + 1 ?? 0,
+                drivertrips: driverdata?.drivertrips + 1,
                 driverrides: JSON.stringify(finaljson),
             },
             update: updateCache
         })
-        setSelectedValue(0);
+        // setSelectedValue(0);
     };
     return <div>
         <Box sx={{ width: '100%' }}>
@@ -136,6 +136,6 @@ export const DriverProfile = () => {
                 </Grid>
             </Grid>
         </Box>
-        <RatingDialog open={open} selectedValue={selectedValue} pickRide={pickRide} type='driver' onClose={handleClose} />
+       {open && <RatingDialog open={open}  pickRide={pickRide} type='driver' onClose={handleClose} />}
     </div>
 }

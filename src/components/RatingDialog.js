@@ -27,15 +27,15 @@ const labels = {
 };
  const RatingDialog = (props) => {
     const classes = useStyles();
-    const { onClose, selectedValue, pickRide, open, type } = props;
-    const [rating, setRating] = useState(selectedValue ?? 0);
+    const { onClose, pickRide, open, type } = props;
+    const [rating, setRating] = useState(3);
     const [hover, setHover] = React.useState(-1);
     const handleListItemClick = (value) => {
         onClose(value);
     };
 
     return (
-        open && <Dialog aria-labelledby="simple-dialog-title" open={open} >
+         <Dialog aria-labelledby="simple-dialog-title" open={open} >
             <DialogTitle id="simple-dialog-title">Rating</DialogTitle>
             <div className={classes.content}>
                 <h4>Name: {pickRide?.[type==='driver'?'ridername':'drivername']}</h4>
